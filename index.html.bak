@@ -325,7 +325,7 @@
           <span class="border-line tw-w-px tw-h-9 bg-white-54 d-lg-flex d-none"></span>
           <div class="d-flex align-items-center tw-gap-2">
             <a
-              href="tel:(234)534-890-11"
+              href="tel:+91 9923832319"
               class="tw-w-9 tw-h-9 bg-main-two-600 text text-heading tw-text-xl d-flex justify-content-center align-items-center rounded-circle hover-bg-main-two-800 hover-text-heading"
             >
               <i class="ph-fill ph-phone"></i>

@@ -20,7 +20,7 @@
     <meta property="og:description" content="Saturn Web Media is a leading SEO company in Pune offering SEO services, local SEO, website development, Google Ads and digital marketing solutions.">
     <meta property="og:url" content="https://saturnwebmedia.com/">
     <meta property="og:site_name" content="SATURN WEB MEDIA">
-    <meta property="og:image" content="assets/images/logo/logo.png">
+    <meta property="og:image" content="assets/images/logo/social-preview.webp">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -42,7 +42,7 @@
         "url":"https://saturnwebmedia.com/",
         "logo":{
           "@type":"ImageObject",
-          "url":"assets/images/logo/logo.png"
+          "url":"https://saturnwebmedia.com/assets/images/logo/logo.png"
         },
         "sameAs":[
           "https://www.linkedin.com/company/13249786/",

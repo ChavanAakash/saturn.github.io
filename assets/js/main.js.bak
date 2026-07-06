@@ -231,7 +231,7 @@
     // ========================= AOS Js Start ===========================
     AOS.init({
       once: false, // animation will happen every time you scroll
-      offset: -80, // start animation when element enters the viewport
+      offset: 0, // start animation when element enters the viewport
       anchorPlacement: "top-bottom", // when the bottom of the element hits the bottom of the screen
     });
     // ========================= AOS Js End ===========================

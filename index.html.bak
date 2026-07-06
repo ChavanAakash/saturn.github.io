@@ -20,13 +20,13 @@
     <meta property="og:description" content="Saturn Web Media is a leading SEO company in Pune offering SEO services, local SEO, website development, Google Ads and digital marketing solutions.">
     <meta property="og:url" content="https://saturnwebmedia.com/">
     <meta property="og:site_name" content="SATURN WEB MEDIA">
-    <meta property="og:image" content="assets/images/logo/social-preview.webp">
+    <meta property="og:image" content="https://saturnwebmedia.com/assets/images/logo/social-preview.webp">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SEO Company in Pune | Digital Marketing | Saturn Web Media">
     <meta name="twitter:description" content="Saturn Web Media is a leading SEO company in Pune offering SEO services, local SEO, website development, Google Ads and digital marketing solutions.">
-    <meta name="twitter:image" content="assets/images/logo/social-preview.webp">
+    <meta name="twitter:image" content="https://saturnwebmedia.com/assets/images/logo/social-preview.webp">
 
     <!-- Schema -->
     <script type="application/ld+json">
@@ -409,8 +409,8 @@
         <div class="col-xl-6">
           <div class="pointer-events-none position-relative z-2 max-w-680-px">
             <h1 class="text-white splitTextStyleOne" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-              Smart SEO for Digital Growth
-              <span class="font-playfair text-main-two-600 fst-italic fw-normal">Your Brands</span>
+              Smart SEO for 
+              <span class="font-playfair text-main-two-600 fst-italic fw-normal">Digital Growth</span>
             </h1>
             <p class="text-white fw-normal max-w-590-px tw-text-xl tw-mt-15" data-aos="fade-up" data-aos-duration="1000"
               data-aos-delay="200">
@@ -1711,7 +1711,7 @@
 
   <div class="container max-w-1720-px">
     <!-- Section heading start -->
-    <div class="max-w-680-px text-center mx-auto tw-mb-10" data-aos="fade-up" data-aos-duration="800"
+    <div class="max-w-680-px text-center mx-auto tw-mb-10" data-aos="fade-up" data-aos-duration="600"
       data-aos-delay="300">
       <span class="bg-main-50 text-main-600 fw-medium tw-text-base rounded-pill tw-px-5 tw-py-1 tw-mb-6">
         Our Members</span>
@@ -2539,7 +2539,17 @@
 
 <!-- main js -->
 <script src="assets/js/main.js" defer></script>
+<script>
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        AOS.refreshHard();
+    }, 500);
+});
 
+window.addEventListener("resize", () => {
+    AOS.refreshHard();
+});
+</script>
 
 </body>
 

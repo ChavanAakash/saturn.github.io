@@ -6767,7 +6767,7 @@ input:focus-visible {
 
 /* ========================= Banner one css start ============================= */
 .banner-one__inner {
-    padding: 235px 0 194px 0;
+    padding: 215px 0 194px 0;
 }
 
 @media (max-width: 1300px) {

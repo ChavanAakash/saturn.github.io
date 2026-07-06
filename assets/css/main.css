@@ -6793,7 +6793,7 @@ input:focus-visible {
 }
 
 .rotate-text-one {
-    inset-inline-start: 42%;
+    inset-inline-start: 32%;
 }
 
 @media (max-width: 1199px) {

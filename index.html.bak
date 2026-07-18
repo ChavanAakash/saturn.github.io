@@ -429,7 +429,7 @@
                                        </div>
                                        <div
                                           class="pointer-events-auto tw-w-17 tw-h-20  overflow-hidden tw-duration-300 hover-scale-14 tw-hover-z-4  position-relative z-0">
-                                          <img src="assets/images/thumbs/client-img2.png" alt="Client Image" class="w-100 h-100 object-fit-cover">
+                                          <img src="assets/images/thumbs/graphic-design-icon.png" alt="graphic-design-icon" class="w-100 h-100 object-fit-cover">
                                        </div>
                                        <div
                                           class="pointer-events-auto tw-w-17 tw-h-20  overflow-hidden tw-duration-300 hover-scale-14 tw-hover-z-4  position-relative z-0">
@@ -527,13 +527,7 @@
                            >
                         Our Services</span
                            >
-                        <h2 class="text-white splitTextStyleOne cursor-big">
-                           Our approach to
-                           <span class="font-playfair fw-normal fst-italic"
-                              >SEO is Data-Driven,</span
-                              >
-                           strategic, and results-oriented.
-                        </h2>
+                       
                      </div>
                      <!-- Section heading end -->
                      <div class="row gy-4">

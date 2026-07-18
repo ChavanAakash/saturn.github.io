@@ -1,873 +1,887 @@
 (function ($) {
-  "use strict";
+    "use strict";
+    var windowOn = $(window);
 
-  // ==========================================
-  //      Start Document Ready function
-  // ==========================================
-  $(document).ready(function () {
-    // ============== Mobile Nav Menu Dropdown Js Start =======================
-    function toggleSubMenu() {
-      if ($(window).width() <= 991) {
-        $(".has-submenu")
-          .off("click")
-          .on("click", function () {
-            $(this)
-              .toggleClass("active")
-              .siblings(".has-submenu")
-              .removeClass("active")
-              .find(".nav-submenu")
-              .slideUp(300);
-            $(this).find(".nav-submenu").stop(true, true).slideToggle(300);
-          });
-      } else {
-        $(".has-submenu").off("click");
-      }
-    }
-
-    toggleSubMenu();
-    $(window).resize(toggleSubMenu);
-    // ============== Mobile Nav Menu Dropdown Js End =======================
-
-    // ===================== Scroll Back to Top Js Start ======================
-    var progressPath = document.querySelector(".progress-wrap path");
-    var pathLength = progressPath.getTotalLength();
-    progressPath.style.transition = progressPath.style.WebkitTransition =
-      "none";
-    progressPath.style.strokeDasharray = pathLength + " " + pathLength;
-    progressPath.style.strokeDashoffset = pathLength;
-    progressPath.getBoundingClientRect();
-    progressPath.style.transition = progressPath.style.WebkitTransition =
-      "stroke-dashoffset 10ms linear";
-    var updateProgress = function () {
-      var scroll = $(window).scrollTop();
-      var height = $(document).height() - $(window).height();
-      var progress = pathLength - (scroll * pathLength) / height;
-      progressPath.style.strokeDashoffset = progress;
-    };
-    updateProgress();
-    $(window).scroll(updateProgress);
-    var offset = 50;
-    var duration = 550;
-    jQuery(window).on("scroll", function () {
-      if (jQuery(this).scrollTop() > offset) {
-        jQuery(".progress-wrap").addClass("active-progress");
-      } else {
-        jQuery(".progress-wrap").removeClass("active-progress");
-      }
+    /* Windows Load */
+    $(window).on('load', function () {
+        wowAnimation();
     });
-    jQuery(".progress-wrap").on("click", function (event) {
-      event.preventDefault();
-      jQuery("html, body").animate({ scrollTop: 0 }, duration);
-      return false;
-    });
-    // ===================== Scroll Back to Top Js End ======================
 
-    // ========================== add active class to navbar menu current page Js Start =====================
-    function dynamicActiveMenuClass(selector) {
-      let FileName = window.location.pathname.split("/").reverse()[0];
 
-      // If we are at the root path ("/" or no file name), keep the activePage class on the Home item
-      if (FileName === "" || FileName === "index.html") {
-        // Keep the activePage class on the Home link
-        selector
-          .find("li.nav-menu__item.has-submenu")
-          .eq(0)
-          .addClass("activePage");
-      } else {
-        // Remove activePage class from all items first
-        selector.find("li").removeClass("activePage");
-
-        // Add activePage class to the correct li based on the current URL
-        selector.find("li").each(function () {
-          let anchor = $(this).find("a");
-          if ($(anchor).attr("href") == FileName) {
-            $(this).addClass("activePage");
-          }
+    // rtl setting start
+    function rs_rtl_settings() {
+        $('#rs-dir-toggler').on("change", function () {
+            toggle_rtl();
+            location.reload(true);
         });
 
-        // If any li has activePage element, add class to its parent li
-        selector.children("li").each(function () {
-          if ($(this).find(".activePage").length) {
-            $(this).addClass("activePage");
-          }
-        });
-      }
-    }
+        function rs_set_scheme(rs_dir) {
+            sessionStorage.setItem('rs_dir', rs_dir);
+            document.documentElement.setAttribute("dir", rs_dir);
 
-    if ($("ul").length) {
-      dynamicActiveMenuClass($("ul"));
-    }
-    // ========================== add active class to navbar menu current page Js End =====================
-
-    // ========================== Settings Panel Js Start =====================
-    $(".settings-button").on("click", function () {
-      $(".settings-panel").toggleClass("active");
-      $(this).toggleClass("active");
-    });
-
-    $(document).on(
-      "click",
-      ".settings-panel__buttons .settings-panel__button",
-      function () {
-        $(this).siblings().removeClass("active");
-        $(this).addClass("active");
-      }
-    );
-
-    // Cursor start
-    $(".cursor-animate").on("click", function () {
-      $("body").removeClass("remove-animate-cursor");
-    });
-
-    $(".cursor-default").on("click", function () {
-      $("body").addClass("remove-animate-cursor");
-    });
-    // Cursor end
-
-    // Direction start
-    $(".direction-ltr").on("click", function () {
-      $("html").attr("dir", "ltr");
-    });
-
-    $(".direction-rtl").on("click", function () {
-      $("html").attr("dir", "rtl");
-    });
-    // Direction end
-    // ========================== Settings Panel Js End =====================
-
-    // ********************* Toast Notification Js start *********************
-    function toastMessage(messageType, messageTitle, messageText, messageIcon) {
-      let $toastContainer = $("#toast-container");
-
-      let $toast = $("<div>", {
-        class: `toast-message ${messageType}`,
-        html: `
-      <div class="toast-message__content">
-        <span class="toast-message__icon">
-          <i class="${messageIcon}"></i>
-        </span>
-        <div class="flex-grow-1">
-          <div class="d-flex align-items-start justify-content-between mb-1">
-            <h6 class="toast-message__title">${messageTitle}</h6>
-            <button type="button" class="toast-message__close">
-              <i class="ph-bold ph-x"></i>
-            </button>
-          </div>
-          <span class="toast-message__text">${messageText}</span>
-        </div>
-      </div>
-      <div class="progress__bar"></div>
-    `,
-      });
-
-      $toastContainer.append($toast);
-
-      setTimeout(() => {
-        $toast.addClass("active");
-      }, 50);
-
-      let totalDuration = 3500;
-      let startTime = Date.now();
-      let remainingTime = totalDuration;
-      let toastTimeout = setTimeout(hideToast, remainingTime);
-
-      function hideToast() {
-        $toast.removeClass("active");
-        setTimeout(() => {
-          $toast.remove();
-        }, 500);
-      }
-
-      // Remove Toast on Close Button Click
-      $toast.find(".toast-message__close").on("click", function () {
-        $toast.removeClass("active");
-        setTimeout(() => {
-          $toast.remove();
-        }, 500);
-      });
-
-      // Pause Timeout on Hover
-      $toast.on("mouseenter", function () {
-        remainingTime -= Date.now() - startTime;
-        clearTimeout(toastTimeout);
-      });
-
-      // Resume Timeout on Mouse Leave
-      $toast.on("mouseleave", function () {
-        startTime = Date.now();
-        toastTimeout = setTimeout(hideToast, remainingTime);
-      });
-    }
-    // ********************* Toast Notification Js End *********************
-
-    // ========================= Form Submit Js Start ===================
-    $(document).on("submit", ".form-submit", function (e) {
-      e.preventDefault();
-
-      $("input").val("");
-
-      $("textarea").val("");
-
-      toastMessage(
-        "success",
-        "Success",
-        "Form submitted successfully!",
-        "ph-fill ph-check-circle"
-      );
-    });
-    // ========================= Form Submit Js End ===================
-
-    // ========================= Search Popup Js Start ===================
-    $(".search-popup__button").on("click", function () {
-      $(".search-popup").addClass("active");
-      $(".overlay").addClass("show-overlay");
-    });
-    $(".search-popup__close, .overlay").on("click", function () {
-      $(".search-popup").removeClass("active");
-      $(".overlay").removeClass("show-overlay");
-    });
-    // ========================= Search Popup Js End ===================
-
-    // ========================= AOS Js Start ===========================
-    AOS.init({
-      once: false, // animation will happen every time you scroll
-      offset: 0, // start animation when element enters the viewport
-      anchorPlacement: "top-bottom", // when the bottom of the element hits the bottom of the screen
-    });
-    // ========================= AOS Js End ===========================
-
-    // ========================= FlowMap Effect Js Start ===========================
-    if($('.flowmap-deformation-wrapper').length > 0 ) {
-      function flowmap_deformation(selector) {
-        document.querySelectorAll(selector).forEach((box) => {
-          const imgSize = [
-            parseFloat(box.getAttribute("data-bg-width")),
-            parseFloat(box.getAttribute("data-bg-height")),
-          ];
-  
-          setTimeout(() => box.classList.add("active"), 300);
-  
-          const renderer = new ogl.Renderer({ dpr: 2 });
-          const gl = renderer.gl;
-          box.appendChild(gl.canvas);
-  
-          const vertex = `
-            attribute vec2 uv;
-            attribute vec2 position;
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = vec4(position, 0, 1);
-            }
-          `;
-  
-          const fragment = `
-            precision highp float;
-            precision highp int;
-            uniform sampler2D tWater;
-            uniform sampler2D tFlow;
-            uniform float uTime;
-            varying vec2 vUv;
-            uniform vec4 res;
-  
-            void main() {
-              vec3 flow = texture2D(tFlow, vUv).rgb;
-              vec2 uv = .5 * gl_FragCoord.xy / res.xy;
-              vec2 myUV = (uv - vec2(0.5)) * res.zw + vec2(0.5);
-              myUV -= flow.xy * 0.105;
-              vec3 tex = texture2D(tWater, myUV).rgb;
-              gl_FragColor = vec4(tex, 1.0);
-            }
-          `;
-  
-          const flowmap = new ogl.Flowmap(gl, { falloff: 0.6 });
-          const geometry = new ogl.Geometry(gl, {
-            position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) },
-            uv: { size: 2, data: new Float32Array([0, 0, 2, 0, 0, 2]) },
-          });
-  
-          const texture = new ogl.Texture(gl, {
-            minFilter: gl.LINEAR,
-            magFilter: gl.LINEAR,
-          });
-  
-          const img = new Image();
-          img.crossOrigin = "Anonymous";
-          img.src = box.getAttribute("data-bg");
-          img.onload = () => (texture.image = img);
-  
-          const program = new ogl.Program(gl, {
-            vertex,
-            fragment,
-            uniforms: {
-              uTime: { value: 0 },
-              tWater: { value: texture },
-              res: { value: new ogl.Vec4() },
-              tFlow: flowmap.uniform,
-            },
-          });
-  
-          const mesh = new ogl.Mesh(gl, { geometry, program });
-  
-          let aspect = 1;
-          const mouse = new ogl.Vec2(-1);
-          const velocity = new ogl.Vec2();
-          const lastMouse = new ogl.Vec2();
-          let lastTime;
-  
-          function resize() {
-            let a1, a2;
-            const imageAspect = imgSize[1] / imgSize[0];
-            const boxW = box.offsetWidth;
-            const boxH = box.offsetHeight;
-  
-            if (boxH / boxW < imageAspect) {
-              a1 = 1;
-              a2 = boxH / boxW / imageAspect;
+            if (rs_dir === 'rtl') {
+                $('body').addClass('rtl');
             } else {
-              a1 = (boxW / boxH) * imageAspect;
-              a2 = 1;
+                $('body').removeClass('rtl');
             }
-  
-            program.uniforms.res.value.set(boxW, boxH, a1, a2);
-            renderer.setSize(boxW, boxH);
-            aspect = boxW / boxH;
-          }
-  
-          window.addEventListener("resize", resize);
-          resize();
-  
-          const isTouchCapable = "ontouchstart" in window;
-          const updateMouse = (e) => {
-            if (e.changedTouches && e.changedTouches.length) {
-              e = e.changedTouches[0];
-            }
-  
-            const rect = box.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-  
-            mouse.set(x / box.offsetWidth, 1 - y / box.offsetHeight);
-  
-            if (!lastTime) {
-              lastTime = performance.now();
-              lastMouse.set(x, y);
-            }
-  
-            const deltaX = x - lastMouse.x;
-            const deltaY = y - lastMouse.y;
-            lastMouse.set(x, y);
-  
-            const time = performance.now();
-            const delta = Math.max(14, time - lastTime);
-            lastTime = time;
-  
-            velocity.x = deltaX / delta;
-            velocity.y = deltaY / delta;
-            velocity.needsUpdate = true;
-          };
-  
-          if (isTouchCapable) {
-            box.addEventListener("touchstart", updateMouse, false);
-            box.addEventListener("touchmove", updateMouse, { passive: false });
-          } else {
-            box.addEventListener("mousemove", updateMouse, false);
-          }
-  
-          requestAnimationFrame(function update(t) {
-            requestAnimationFrame(update);
-  
-            if (!velocity.needsUpdate) {
-              mouse.set(-1);
-              velocity.set(0);
-            }
-  
-            velocity.needsUpdate = false;
-  
-            flowmap.aspect = aspect;
-            flowmap.mouse.copy(mouse);
-            flowmap.velocity.lerp(velocity, velocity.len() ? 0.15 : 0.1);
-            flowmap.update();
-  
-            program.uniforms.uTime.value = t * 0.01;
-            renderer.render({ scene: mesh });
-          });
-        });
-      }
-  
-      flowmap_deformation(".flowmap-deformation-wrapper");
-    }
-    // ========================= FlowMap Effect Js End ===========================
 
-    // ========================= Counter Up Js End ===================
-    const counterUp = window.counterUp.default;
-
-    const callback = (entries) => {
-      entries.forEach((entry) => {
-        const el = entry.target;
-        if (entry.isIntersecting && !el.classList.contains("is-visible")) {
-          counterUp(el, {
-            duration: 1500,
-            delay: 16,
-          });
-          el.classList.add("is-visible");
+            var list = $("[href='assets/vendor/css/bootstrap.min.css']");
+            $(list).attr("href", rs_dir === 'rtl' ? "assets/vendor/css/bootstrap.rtl.min.css" : "assets/vendor/css/bootstrap.min.css");
         }
-      });
-    };
-    const IO = new IntersectionObserver(callback, { threshold: 1 });
 
-    // Banner statistics Counter
-    const statisticsCounter = document.querySelectorAll(".counter");
-    if (statisticsCounter.length > 0) {
-      statisticsCounter.forEach((counterNumber) => {
-        IO.observe(counterNumber);
-      });
+        function toggle_rtl() {
+            if (sessionStorage.getItem('rs_dir') === 'rtl') {
+                rs_set_scheme('ltr'); /* change ltr to rtl */
+            } else {
+                rs_set_scheme('rtl');
+            }
+        }
+
+        function rs_init_dir() {
+            var savedDir = sessionStorage.getItem('rs_dir');
+            rs_set_scheme(savedDir || 'ltr'); /* change ltr to rtl */
+            document.getElementById('rs-dir-toggler').checked = savedDir === 'rtl'; //This Switch
+        }
+
+        rs_init_dir();
     }
 
-    // performance Count
-    const performanceCount = document.querySelectorAll(".counter");
-    if (performanceCount.length > 0) {
-      performanceCount.forEach((counterNumber) => {
-        IO.observe(counterNumber);
-      });
-    }
-    // ========================= Counter Up Js End ===================
+    
 
-    // ================================= Brand slider Start =========================
-    var brandSlider = new Swiper(".brand-slider", {
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      autoplay: true,
-      speed: 1500,
-      grabCursor: true,
-      loop: true,
-      slidesPerView: 6,
-      breakpoints: {
-        300: {
-          slidesPerView: 2,
-        },
-        575: {
-          slidesPerView: 3,
-        },
-        768: {
-          slidesPerView: 4,
-        },
-        992: {
-          slidesPerView: 5,
-        },
-        1200: {
-          slidesPerView: 6,
-        },
-      },
+
+    /* Preloader activation */
+    $(window).on('load', function (event) {
+        $("#pre-load").delay(600).fadeOut(500);
+        $(".pre-loader").delay(600).fadeOut(500);
     });
-    // ================================= Brand slider End =========================
 
-    // ========================== Add Attribute For Bg Image Js Start ====================
-    $(".background-img").css("background", function () {
-      var bg = "url(" + $(this).data("background-image") + ")";
-      return bg;
-    });
-    // ========================== Add Attribute For Bg Image Js End =====================
+    /* footer year */
+    var yearElement = document.getElementById("year");
+    if (yearElement) { yearElement.innerHTML = new Date().getFullYear(); }
+    /* footer year */
 
-    // ====================== Marquee Js Start ========================
-    if ($(".marquee_left").length) {
-      $(".marquee_left").marquee({
-        speed: 300,
-        gap: 0,
-        delayBeforeStart: 0,
-        direction: $("html").attr("dir") === "rtl" ? "right" : "left",
-        duplicated: true,
-        pauseOnHover: true,
-        startVisible: true,
-        direction: "left",
-      });
-    }
-
-    if ($(".marquee_right").length) {
-      $(".marquee_right").marquee({
-        speed: 300,
-        gap: 0,
-        delayBeforeStart: 0,
-        direction: $("html").attr("dir") === "rtl" ? "right" : "left",
-        duplicated: true,
-        pauseOnHover: true,
-        startVisible: true,
-        direction: "right",
-      });
-    }
-    // ====================== Marquee Js End ========================
-
-    // ================================ Floating Progress js start =================================
-    const progressContainers = document.querySelectorAll(".progress-container");
-
-    function setPercentage(progressContainer) {
-      const percentage =
-        progressContainer.getAttribute("data-percentage") + "%";
-
-      const progressEl = progressContainer.querySelector(".progress");
-      const percentageEl = progressContainer.querySelector(".percentage");
-
-      progressEl.style.width = percentage;
-      percentageEl.innerText = percentage;
-      percentageEl.style.insetInlineStart = percentage;
-    }
-
-    // Intersection Observer to trigger progress animation when section is in view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Element is in view, start the progress animation
-            const progressContainer = entry.target;
-            setPercentage(progressContainer);
-            progressContainer
-              .querySelector(".progress")
-              .classList.remove("active");
-            progressContainer
-              .querySelector(".percentage")
-              .classList.remove("active");
-            observer.unobserve(progressContainer); // Stop observing once animation is triggered
-          }
+    /* Wow Active */
+    function wowAnimation() {
+        var wow = new WOW({
+            boxClass: 'wow',
+            animateClass: 'animated',
+            offset: 0,
+            mobile: false,
+            live: true
         });
-      },
-      {
-        threshold: 0.5, // Adjust this value as needed (0.5 means half the section needs to be visible)
-      }
-    );
+        wow.init();
+    }
 
-    // Start observing all progress containers
-    progressContainers.forEach((progressContainer) => {
-      observer.observe(progressContainer);
+    /*======================================
+Sidebar Toggle
+========================================*/
+    $(".offcanvas-close,.offcanvas-overlay").on("click", function () {
+        $(".offcanvas-area").removeClass("info-open");
+        $(".offcanvas-overlay").removeClass("overlay-open");
     });
-    // ================================ Floating Progress js End =================================
+    $(".sidebar-toggle").on("click", function () {
+        $(".offcanvas-area").addClass("info-open");
+        $(".offcanvas-overlay").addClass("overlay-open");
+    });
 
-    // ================================ Project slider js Start =================================
-    var projectSlider = new Swiper(".project-slider", {
-      slidesPerView: 2,
-      spaceBetween: 24,
-      centeredSlides: true,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      breakpoints: {
-        0: {
-          centeredSlides: false,
-          slidesPerView: 1,
+    /* Body overlay Js */
+    $(".body-overlay").on("click", function () {
+        $(".offcanvas-area").removeClass("opened");
+        $(".body-overlay").removeClass("opened");
+    });
+
+    /* Data Css js */
+    $("[data-background").each(function () {
+        $(this).css(
+            "background-image",
+            "url( " + $(this).attr("data-background") + "  )"
+        );
+    });
+
+    $("[data-width]").each(function () {
+        $(this).css("width", $(this).attr("data-width"));
+    });
+
+    $("[data-bg-color]").each(function () {
+        $(this).css("background-color", $(this).attr("data-bg-color"));
+    });
+
+    /* MagnificPopup image view */
+    $(".popup-image").magnificPopup({
+        type: "image",
+        gallery: {
+            enabled: true,
         },
-        576: {
-          centeredSlides: true,
-        },
-      },
     });
-    // ================================ Project slider js End =================================
 
-    // ========================= Team Section Social icons Js Start =====================
-    $(document).on("click", ".show-social-icon-button", function () {
-      $(this).toggleClass("active");
-      $(this).closest("div").find(".show-socials-icons").toggleClass("active");
+    /* jarallax js */
+    jarallax(document.querySelectorAll('.jarallax'), {
+        speed: 0.5,
     });
-    // ========================= Team Section Social icons Js End =====================
 
-    // ================================= Brand slider Start =========================
-    var testimonialsSlider = new Swiper(".testimonials-slider", {
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      autoplay: true,
-      speed: 1500,
-      grabCursor: true,
-      loop: true,
-      slidesPerView: 1,
-      navigation: {
-        nextEl: ".testi-button-next",
-        prevEl: ".testi-button-prev",
-      },
-      effect: "cube",
-      grabCursor: true,
-      cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94,
-      },
+    /* MagnificPopup video view */
+    $(".popup-video").magnificPopup({
+        type: "iframe",
     });
-    // ================================= Brand slider End =========================
 
-    // ========================= magnific Popup Js Start =====================
-    $(".play-button").magnificPopup({
-      type: "iframe",
-      removalDelay: 300,
-      mainClass: "mfp-fade",
+    /* Nice Select Js */
+    $("select").niceSelect();
+
+    /* PureCounter Js */
+    new PureCounter();
+    new PureCounter({
+        filesizing: true,
+        selector: ".filesizecount",
+        pulse: 2,
     });
-    // ========================= magnific Popup Js End =====================
 
-    // ********************* Animate Background *********************
-    function moveBorder(wrapper) {
-      var $activeTab = $(wrapper).find(".active").parent("li");
-      var position = $activeTab.position();
-      var width = $activeTab.width();
+    /* pricing */
+    var mainPlan = $('.rs-pricing-area');
+    mainPlan.each(function () {
+        var yearlySelectBtn = $('.yearly-plan-btn'),
+            monthlySelectBtn = $('.monthly-plan-btn'),
+            monthlyPrice = $('.monthly-pricing'),
+            yearlyPrice = $('.yearly-pricing'),
+            buttonSlide = $('.pricing-checkbox');
 
-      $(wrapper)
-        .find(".animate-background")
-        .css({
-          left: position.left + "px",
-          width: width + "px",
+        $(monthlySelectBtn).on('click', function () {
+            buttonSlide.prop('checked', true);
+            $(this).addClass('active').parent('.rs-pricing-tab').siblings().children().removeClass('active');
+            monthlyPrice.css('display', 'block');
+            yearlyPrice.css('display', 'none');
+        });
+
+        $(yearlySelectBtn).on('click', function () {
+            buttonSlide.prop('checked', false);
+            $(this).addClass('active').parent('.rs-pricing-tab').siblings().children().removeClass('active');
+            monthlyPrice.css('display', 'none');
+            yearlyPrice.css('display', 'block');
+        });
+
+    });
+
+    //===== Odometer js
+    $('.odometer').appear(function (e) {
+        var odo = $(".odometer");
+        odo.each(function () {
+            var countNumber = $(this).attr("data-count");
+            $(this).html(countNumber);
+        });
+    });
+
+    //search
+    $('.rs-header-search-icon').on('click', function (event) {
+        $('.rs-stickys-form').slideToggle('show');
+        $(this).toggleClass('icon-close');
+    });
+
+    // tooltip
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltipTriggers = document.querySelectorAll(".rs-portfolio-tooltip .rs-portfolio-tooltip-item");
+        tooltipTriggers.forEach(function(element) {
+            element.addEventListener("mousemove", myFunction);
+        });
+        function myFunction(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            var tooltipTrigger = e.currentTarget;
+            var tooltip = tooltipTrigger.querySelector(".rs-portfolio-tooltip .rs-portfolio-tooltip-content");
+            var triggerRect = tooltipTrigger.getBoundingClientRect();
+            var offsetX = x - triggerRect.left;
+            var offsetY = y - triggerRect.top;
+            var tooltipRect = tooltip.getBoundingClientRect();
+            var triggerWidth = triggerRect.width;
+            var triggerHeight = triggerRect.height;
+            var tooltipWidth = tooltipRect.width;
+            var tooltipHeight = tooltipRect.height;
+            var buffer = 200;
+            var maxX = triggerWidth - tooltipWidth + buffer;
+            var maxY = triggerHeight - tooltipHeight + buffer;
+            var left = Math.min(Math.max(x - triggerRect.left - tooltipWidth / 2, -buffer), maxX);
+            var top = Math.min(Math.max(y - triggerRect.top - tooltipHeight / 2, -buffer), maxY);
+            tooltip.style.left = left + "px";
+            tooltip.style.top = top + "px";
+        }
+    });
+
+    $(document).ready(function () {
+        // button style
+        $('.rs-button-wrapper .rs-btn').mouseenter(function () {
+            $(this).find('.rs-icon').css('animation', 'btnHoverEffect 0.5s');
+        });
+        $('.rs-button-wrapper .rs-btn').mouseleave(function () {
+            $(this).find('.rs-icon').css('animation', 'btnHoverEffectReverse 0.5s');
+        });
+
+        // circle text slide
+        if ($('.rs-text-circle').length) {
+            $(".rs-text-circle").each(function () {
+                // Wrap all charecter inside a span
+                var sentence = $(this).text().replace(/\s+/g, ' ').trim();
+                var wrappedSentence = '';
+                for (var i = 0; i < sentence.length; i++) {
+                    wrappedSentence += '<span>' + sentence[i] + '</span>';
+                }
+                $(this).html(wrappedSentence);
+
+                // Give a rotate value for each span
+                var rotateDegree = parseInt($(this).data("rotate-degree"), 10) || 20;
+                $(this).find("span").each(function (index) {
+                    $(this).css("transform", "rotate(" + ((index + 1) * rotateDegree) + "deg)");
+                });
+            });
+        }
+
+        // Swiper Dynamic Slider Active
+        $('.rs-swiper .swiper').each(function (index) {
+            var $swiper = $(this);
+            var hoverAutoplay = $swiper.data('hover-pause') === undefined ? true : $swiper.data('hover-pause');
+            var loop = $(this).data('loop') === undefined ? true : $(this).data('loop');
+            var centeredSlides = $(this).data('center-mode') === undefined ? false : $(this).data('center-mode');
+            var autoplay = $(this).data('autoplay') === undefined ? true : $(this).data('autoplay');
+            var dynamicBullets = $(this).data('dots-dynamic') === undefined ? true : $(this).data('dots-dynamic');
+            var direction = $(this).data('direction') === 'vertical' ? 'vertical' : 'horizontal';
+            var fridgeMovement = $(this).data('play-slide') === undefined ? true : $(this).data('play-slide');
+            var effect = $(this).data('effect') || 'slide'; //'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards';
+            var grabCursor = $(this).data('grab-cursor') === undefined ? false : $(this).data('grab-cursor');
+            var oneWayMovement = $(this).data('one-way') === undefined ? false : $(this).data('one-way');
+            var startAt = $(this).data('start-at');
+            var slidesPerView = $(this).data('item');
+            var speed = $(this).data('speed');
+            var gap = (($(this).data('no-gap') === true) ? 0 : 30);
+            var margin = ($(this).data('margin') ? $(this).data('margin') : gap);
+            var autoHeight = $swiper.data('auto-height') === true || $swiper.data('auto-height') === 'true';
+            var observer = $swiper.data('observer') === true || $swiper.data('observer') === 'true';
+            var observeParents = $swiper.data('observe-parents') === true || $swiper.data('observe-parents') === 'true';
+
+
+            // Breakpoints
+            var slidesPerViewXl = $(this).data('item-xl');
+            var slidesPerViewLg = $(this).data('item-lg');
+            var slidesPerViewMd = $(this).data('item-md');
+            var slidesPerViewSm = $(this).data('item-sm');
+            var slidesPerViewXs = $(this).data('item-xs');
+            var slidesPerViewMobile = $(this).data('item-mobile');
+            var marginXl = ($(this).data('margin-xl') ? $(this).data('margin-xl') : margin);
+            var marginLg = ($(this).data('margin-lg') ? $(this).data('margin-lg') : marginXl);
+            var marginMd = ($(this).data('margin-md') ? $(this).data('margin-md') : marginLg);
+            var marginSm = ($(this).data('margin-sm') ? $(this).data('margin-sm') : marginMd);
+            var marginXs = ($(this).data('margin-xs') ? $(this).data('margin-xs') : marginSm);
+            var marginMobile = ($(this).data('margin-mobile') ? $(this).data('margin-mobile') : marginXs);
+
+            // Controls unique classes based on the index
+            var rsNavPrev = `rs-nav-prev-${index}`;
+            var rsNavNext = `rs-nav-next-${index}`;
+            $swiper.closest('.rs-swiper').find('.swiper-button-prev').addClass(rsNavPrev);
+            $swiper.closest('.rs-swiper').find('.swiper-button-next').addClass(rsNavNext);
+
+            var rsPagination = `rs-pagination-${index}`;
+            $swiper.closest('.rs-swiper').find('.swiper-pagination').addClass(rsPagination);
+
+            var swiper = new Swiper(this, {
+                loop: loop,
+                autoplay: autoplay,  // data-autoplay="true" => Delay | .swiper-slide | data-swiper-autoplay="2000">
+                direction: direction,
+                effect: effect,
+                enabled: fridgeMovement,
+                grabCursor: grabCursor,
+                oneWayMovement: oneWayMovement,
+                centeredSlides: centeredSlides,
+                initialSlide: (startAt ? startAt : 0),
+                slidesPerView: (slidesPerView ? slidesPerView : 1),
+                spaceBetween: margin,
+                autoHeight: autoHeight,
+                observer: observer,
+                observeParents: observeParents,
+                speed: (speed ? speed : 500),
+                pagination: {
+                    el: `.${rsPagination}`,
+                    dynamicBullets: dynamicBullets,
+                    clickable: true,
+                },
+
+                navigation: {
+                    nextEl: `.${rsNavPrev}`,
+                    prevEl: `.${rsNavNext}`,
+                },
+
+                breakpoints: {
+                    10: {
+                        slidesPerView: (slidesPerViewMobile ? slidesPerViewMobile : 1),
+                        spaceBetween: marginMobile,
+                    },
+                    481: {
+                        slidesPerView: (slidesPerViewXs ? slidesPerViewXs : 1),
+                        spaceBetween: marginXs,
+                    },
+                    576: {
+                        slidesPerView: (slidesPerViewSm ? slidesPerViewSm : 1),
+                        spaceBetween: marginSm,
+                    },
+                    768: {
+                        slidesPerView: (slidesPerViewMd ? slidesPerViewMd : 1),
+                        spaceBetween: marginMd,
+                    },
+                    992: {
+                        slidesPerView: (slidesPerViewLg ? slidesPerViewLg : 1),
+                        spaceBetween: marginLg,
+                    },
+                    1025: {
+                        slidesPerView: (slidesPerViewXl ? slidesPerViewXl : 1),
+                        spaceBetween: marginXl,
+                    },
+                    1201: {
+                        slidesPerView: (slidesPerView ? slidesPerView : 1),
+                        spaceBetween: margin,
+                    }
+                }
+            });
+            
+        });
+
+            /* product active */
+            var productDetails = new Swiper(".product-details-nav", {
+                spaceBetween: -20,
+                slidesPerView: 4,
+                navigation: {
+                    nextEl: ".product-details-button-next",
+                    prevEl: ".product-details-button-prev",
+                },
+            });
+
+            /* product small thumb active */
+            var productDetailsActive = new Swiper(".product-details-active", {
+                spaceBetween: 0,
+                thumbs: {
+                    swiper: productDetails,
+                },
+                navigation: {
+                    nextEl: ".product-details-button-next",
+                    prevEl: ".product-details-button-prev",
+                },
+            });
+
+            /* Shop Cart minus */
+            $('.rs-cart-minus').on('click', function () {
+                var $input = $(this).parent().find('input');
+                var count = parseInt($input.val(), 10) - 1; // Adding radix parameter
+                count = count < 1 ? 1 : count;
+                $input.val(count);
+                $input.change();
+                return false;
+            });
+
+            /* Shop Cart plus */
+            $('.rs-cart-plus').on('click', function () {
+                var $input = $(this).parent().find('input');
+                $input.val(parseInt($input.val(), 10) + 1); // Adding radix parameter
+                $input.change();
+                return false;
+            });
+
+                /* row remove activation */
+            $('.removeRow').on('click', function () {
+                $(this).closest('tr').remove();
+            });
+
+            /* Show Login Toggle Js */
+            $('.checkout-login-form-reveal-btn').on('click', function () {
+                $('#checkout-coupon').slideToggle(400);
+            });
+
+
+        /* Button scroll up js */
+        var progressPath = document.querySelector(".backtotop-wrap path");
+        var pathLength = progressPath.getTotalLength();
+        progressPath.style.transition = progressPath.style.WebkitTransition = "none";
+        progressPath.style.strokeDasharray = pathLength + " " + pathLength;
+        progressPath.style.strokeDashoffset = pathLength;
+        progressPath.getBoundingClientRect();
+        progressPath.style.transition = progressPath.style.WebkitTransition = "stroke-dashoffset 10ms linear";
+        var updateProgress = function () {
+            var scroll = $(window).scrollTop();
+            var height = $(document).height() - $(window).height();
+            var progress = pathLength - (scroll * pathLength) / height;
+            progressPath.style.strokeDashoffset = progress;
+        };
+        updateProgress();
+        $(window).scroll(updateProgress);
+        var offset = 150;
+        var duration = 550;
+        $(window).on("scroll", function () {
+            if ($(this).scrollTop() > offset) {
+                $(".backtotop-wrap").addClass("active-progress");
+            } else {
+                $(".backtotop-wrap").removeClass("active-progress");
+            }
+
+        // sticky header
+        var stickyHeader = $("#rs-sticky-header");
+        $(window).on("scroll", function () {
+            if ($(this).scrollTop() > 200) {
+                stickyHeader.addClass("active");
+            } else {
+                stickyHeader.removeClass("active");
+            }
+        });
+
+
+        });
+        $(".backtotop-wrap").on("click", function (event) {
+            event.preventDefault();
+            $("html, body").animate({
+                scrollTop: 0
+            }, parseInt(duration, 10)); /* Fixing parseInt call with radix parameter */
+            return false;
+        });
+
+        /* slider-rang js */
+        var slider1 = document.getElementById('slider-range'); // Changed variable name to slider1
+        var minValue = 0;
+        var maxValue = 2500;
+        if ($("#slider-range").length) {
+            noUiSlider.create(slider1, {
+                start: [0, 1100],
+                connect: true,
+                range: {
+                    'min': minValue,
+                    'max': maxValue
+                }
+            });
+
+            var amount1 = document.getElementById('amount'); // Changed variable name to amount1
+            slider1.noUiSlider.on('update', function (values, handle) {
+                amount1.value = "$" + values[0] + " - $" + values[1];
+            });
+
+            $('#filter-btn').on('click', function () {
+                $('.filter-widget').slideToggle(1000);
+            });
+        }
+
+  
+        //  hotspots
+        jQuery('.rs-ripple-item').each(function(index) {
+            var uniqueClass = 'rs-ripple-item-' + index;
+            jQuery(this).addClass(uniqueClass);
+            var parentHotspots = jQuery(this).closest('.rs-contact-wrapper');
+            var targetMobileItem = parentHotspots.find('.mobile_item').eq(index);
+            jQuery(this).on('click', function() {
+                if (targetMobileItem.hasClass('active')) {
+                    targetMobileItem.removeClass('active');
+                } else {
+                    parentHotspots.find('.mobile_item.active').removeClass('active');
+                    targetMobileItem.addClass('active');
+                }
+            });
+            parentHotspots.on('click', '.remove-icon', function(event) {
+                event.stopPropagation();
+                targetMobileItem.removeClass('active');
+            });
+        });
+
+        // Ripple Class Switching
+        var switches = jQuery('.rs-contact-wrapper .rs-ripple-item');
+        var currentIndex = 0;
+        var interval;
+        var speed = 1500;
+
+        function startRotation() {
+            interval = setInterval(function() {
+                switches.eq(currentIndex).removeClass('ripple');
+                currentIndex = (currentIndex + 1) % switches.length;
+                switches.eq(currentIndex).addClass('ripple');
+            }, speed);
+        }
+        function stopRotation() {
+            clearInterval(interval);
+            switches.eq(currentIndex).removeClass('ripple');
+        }
+        startRotation();
+        switches.on('mouseenter', function () {
+            stopRotation();
+        }).on('mouseleave', function () {
+            startRotation();
+        });
+  
+        // pie chart
+        if ($('#pie-chart').length) {
+            new Chart(document.getElementById("pie-chart") , {
+                type : "pie",
+                data : {
+                    labels : ["Sciences & Healthcare","Power Generation","Retail & Consumer","Industrial & Chemical","Oil & Gas Energy"],
+                    datasets : [ {
+                        backgroundColor : ["#0D80CE","#5CC8BE","#3B37FD","#EE0D08","#EA5501"],
+                        data : ["16","36","46","56","76"],
+                    } ]
+                },
+                options : {
+                    responsive : true,
+                    layout:{
+                        padding:0,
+                    },
+                    plugins: {
+                        legend: {
+                            position: "left",                              
+                            labels:{
+                                color: '#1F1F1F',
+                                padding:15,
+                                boxWidth:12,
+                                boxHeight:12,
+                                font: {
+                                    size: 15,
+                                    weight: 600,
+                                }
+                            }
+                        },                          
+                    }
+                }
+            });
+        }
+
+       
+        // Menu Active
+        const currentPath = window.location.pathname.split('/').pop();
+        const menuLinks = document.querySelectorAll('.multipage-menu a');
+        menuLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (linkPath === currentPath || (currentPath === '' && linkPath === 'index.html')) {
+                link.classList.add('active');
+                let parentLi = link.parentElement;
+                while (parentLi) {
+                    if (parentLi.tagName === 'LI') {
+                        parentLi.classList.add('active');
+                    }
+                    parentLi = parentLi.parentElement;
+                }
+            }
+        });
+
+
+        /* Mobile Menu Js */
+        $("#mobile-menu").meanmenu({
+            meanMenuContainer: ".mobile-menu",
+            meanScreenWidth: "1199",
+            meanExpand: ['<i class="fa-regular fa-plus"></i>'],
+        });
+
+        /*======================================
+          One Page overlay close
+        ========================================*/
+        function scrollNav() {
+            $(".onepage-menu li a").on('click', function () {
+                $(".onepage-menu li a.active").removeClass("active");
+                $(this).addClass("active");
+                $(".offcanvas-area").removeClass("info-open");
+                $(".offcanvas-overlay").removeClass("overlay-open");
+            });
+        }
+        scrollNav();
+
+        /* countdown activation start */
+        function makeTimer(endTime, countdownElementId) {
+            var now = new Date();
+            now = (Date.parse(now) / 1000);
+            var timeLeft = endTime - now;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval); // Stop the timer
+                $("#" + countdownElementId + " [data-unit='days']").html("00<span>Days</span>");
+                $("#" + countdownElementId + " [data-unit='hours']").html("00<span>Hours</span>");
+                $("#" + countdownElementId + " [data-unit='minutes']").html("00<span>Minutes</span>");
+                $("#" + countdownElementId + " [data-unit='seconds']").html("00<span>Seconds</span>");
+                return;
+            }
+            var days = Math.floor(timeLeft / 86400);
+            var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+            var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
+            var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+            if (hours < "10") { hours = "0" + hours; }
+            if (minutes < "10") { minutes = "0" + minutes; }
+            if (seconds < "10") { seconds = "0" + seconds; }
+            $("#" + countdownElementId + " [data-unit='days']").html(days + "<span>Days</span>");
+            $("#" + countdownElementId + " [data-unit='hours']").html(hours + "<span>Hours</span>");
+            $("#" + countdownElementId + " [data-unit='minutes']").html(minutes + "<span>Minutes</span>");
+            $("#" + countdownElementId + " [data-unit='seconds']").html(seconds + "<span>Seconds</span>");
+        }
+        var endTime = new Date("5 August 2025 14:00:00 GMT+06:00");
+        endTime = (Date.parse(endTime) / 1000);
+        var timerInterval = setInterval(function () {
+            makeTimer(endTime, "countdown1");
+            makeTimer(endTime, "countdown2");
+            makeTimer(endTime, "countdown3");
+            makeTimer(endTime, "countdown4");
+            makeTimer(endTime, "countdown5");
+        }, 1000);
+
+        // Tab Auto Switcher
+        if ($('.rs-services-tab-wrapper.auto-switch').length) {
+            var interval = 5000;
+            var autoSwitchTimer;
+            function switchTabs() {
+                var $activeTab = $('.rs-services-tab-wrapper.auto-switch .nav-item .nav-link.active');
+                var $nextTab = $activeTab.closest('.nav-item').next('.nav-item').find('.nav-link');
+                if (!$nextTab.length) {
+                    $nextTab = $('.rs-services-tab-wrapper.auto-switch .nav-item').first().find('.nav-link');
+                }
+                $nextTab.trigger('click');
+            }
+            function startAutoSwitch() {
+                autoSwitchTimer = setInterval(switchTabs, interval);
+            }
+            startAutoSwitch();
+            $('.rs-services-tab-wrapper.auto-switch').on('mouseenter', function() {
+                clearInterval(autoSwitchTimer);
+            });
+            $('.rs-services-tab-wrapper.auto-switch').on('mouseleave', function() {
+                startAutoSwitch();
+            });
+        }
+    });
+    
+
+    /* pralax image */
+    if ($('.prallax-parent').length) {
+        $(".prallax-parent").each(function () {
+            var prallaxParent = $(this).get(0);
+            var parallaxInstance = new Parallax(prallaxParent);
         });
     }
 
-    // Move Background on page load for each tab group
-    $(".animate-background-wrapper").each(function () {
-      moveBorder(this);
-    });
-
-    // Move Background on tab click
-    $(".animate-background-wrapper .nav-link").on("click", function () {
-      var wrapper = $(this).closest(".animate-background-wrapper");
-      wrapper.find(".nav-link").removeClass("active");
-      $(this).addClass("active");
-      moveBorder(wrapper);
-    });
-    // ========================= Active Tab Background animation Js End ===================
-
-    // ================================ Project Two slider js Start =================================
-    var projectTwoSlider = new Swiper(".project-two-slider", {
-      slidesPerView: 4,
-      spaceBetween: 24,
-      centeredSlides: true,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      breakpoints: {
-        0: {
-          centeredSlides: false,
-          slidesPerView: 1,
-        },
-        576: {
-          centeredSlides: true,
-          slidesPerView: 2,
-        },
-        991: {
-          slidesPerView: 2,
-        },
-        1200: {
-          slidesPerView: 3,
-        },
-        1365: {
-          slidesPerView: 4,
-        },
-      },
-    });
-    // ================================ Project Two slider js End =================================
-
-    // ================================ Testimonials Two slider js Start =================================
-    var testimonialsTwoSlider = new Swiper(".testimonials-two-slider", {
-      slidesPerView: 1,
-      spaceBetween: 24,
-      centeredSlides: true,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".testimonials-two-button-next",
-        prevEl: ".testimonials-two-button-prev",
-      },
-    });
-    // ================================ Testimonials Two slider js End =================================
-
-    // ================================ Parallax js Start =================================
-    $(".parallax-window").parallax();
-    // ================================ Parallax js End =================================
-
-    // ======================= Statistics Three Js Start ==================
-
-    // ================================= Brand slider Start =========================
-    var statisticsBrandSlider = new Swiper(".statistics-brand-slider", {
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      autoplay: true,
-      speed: 1500,
-      grabCursor: true,
-      loop: true,
-      slidesPerView: 4,
-      breakpoints: {
-        425: {
-          slidesPerView: 3,
-        },
-        575: {
-          slidesPerView: 4,
-        },
-      },
-    });
-    // ================================= Brand slider End =========================
-
-    // ================================ Testimonials Two slider js Start =================================
-    var testimonialsThreeSlider = new Swiper(".testimonials-three-slider", {
-      slidesPerView: 1,
-      spaceBetween: 24,
-      centeredSlides: true,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      effect: "cube",
-      cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94,
-      },
-      navigation: {
-        nextEl: ".testimonials-three-next",
-        prevEl: ".testimonials-three-prev",
-      },
-    });
-    // ================================ Testimonials Two slider js End =================================
-
-    // ================================ Service Four slider js Start =================================
-    var serviceFourThumbsSlider = new Swiper(".service-four-thumbs-slider", {
-      slidesPerView: 1,
-      effect: "fade",
-      loop: true,
-      watchSlidesProgress: true,
-    });
-
-    var serviceFourItemSlider = new Swiper(".service-four-item-slider", {
-      spaceBetween: 10,
-      slidesPerView: 1,
-      loop: true,
-      freeMode: true,
-      watchSlidesProgress: true,
-      pagination: {
-        el: ".service-four-pagination",
-        type: "fraction",
-      },
-      navigation: {
-        nextEl: ".service-four-next",
-        prevEl: ".service-four-prev",
-      },
-      thumbs: {
-        swiper: serviceFourThumbsSlider,
-      },
-    });
-    // ================================ Service Four slider js End =================================
-
-    // ================================ Testimonials four slider js Start =================================
-    var testimonialsFourSlider = new Swiper(".testimonials-four-slider", {
-      slidesPerView: 2,
-      spaceBetween: 24,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".testimonials-four-next",
-        prevEl: ".testimonials-four-prev",
-      },
-      breakpoints: {
-        300: {
-          slidesPerView: 1,
-        },
-        1199: {
-          slidesPerView: 2,
-        },
-      },
-    });
-    // ================================ Testimonials four slider js End =================================
-
-    // ================================ Testimonials new slider js Start =================================
-    var testimonialsNewSlider = new Swiper(".testimonials-new-slider", {
-      slidesPerView: 1,
-      spaceBetween: 24,
-      grabCursor: true,
-      loop: true,
-      speed: 1000,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".testimonials-new-next",
-        prevEl: ".testimonials-new-prev",
-      },
-      breakpoints: {
-        992: {
-          slidesPerView: 1,
-        },
-        1300: {
-          slidesPerView: 2,
-        },
-      },
-    });
-    // ================================ Testimonials new slider js End =================================
-
-    var testiNewTwoThumbsSlider = new Swiper(
-      ".testimonials-new-two-thumbs-slider",
-      {
+    // marquee slide
+    let SwiperMarquee = new Swiper('.rs-marquee-slide', {
         spaceBetween: 0,
-        slidesPerView: 3,
-        watchSlidesProgress: true,
         centeredSlides: true,
-        grabCursor: true,
-        loop: true,
-        speed: 1000,
-      }
-    );
-    var testiNewTwoContentSlider = new Swiper(
-      ".testimonials-new-two-content-slider",
-      {
-        spaceBetween: 0,
-        loop: true,
-        grabCursor: true,
-        navigation: {
-          nextEl: ".testimonials-new-two-content-next",
-          prevEl: ".testimonials-new-two-content-prev",
+        speed: 10000,
+        autoplay: {
+          delay: 1,
         },
-        thumbs: {
-          swiper: testiNewTwoThumbsSlider,
-        },
-      }
-    );
-  });
-  // ==========================================
-  //      End Document Ready function
-  // ==========================================
+        loop: true,
+        slidesPerView:'auto',
+        allowTouchMove: false,
+        disableOnInteraction: true
+      });
 
-  // ========================= Preloader Js Start =====================
-  $(window).on("load", function () {
-    $(".loader-mask").fadeOut();
-  });
-  // ========================= Preloader Js End=====================
+    /* portfolio tab */
+    if ($('.portfolio-load-more').length > 0) {
+        $('.grid').imagesLoaded(function () {
+            // init Isotope
+            var $grid = $('.grid').isotope({
+                itemSelector: '.grid-item',
+                percentPosition: true,
+                masonry: {
+                    // use outer width of grid-sizer for columnWidth
+                    columnWidth: '.grid-item',
+                }
+            });
 
-  // ========================= Header Sticky Js Start ==============
-  $(window).on("scroll", function () {
-    if ($(window).scrollTop() >= 260) {
-      $(".header").addClass("fixed-header");
+
+            // filter items on button click
+            $('.rs-portfolio-tab').on('click', 'button', function () {
+                var filterValue = $(this).attr('data-filter');
+                $grid.isotope({ filter: filterValue });
+            });
+
+            //for menu active class
+            $('.rs-portfolio-tab button').on('click', function (event) {
+                $(this).siblings('.active').removeClass('active');
+                $(this).addClass('active');
+                event.preventDefault();
+            });
+
+            var show_item = $('.portfolio-load-more').attr('data-show');
+            var count_item = show_item;
+            var isotop_call = $grid.data('isotope');
+
+            loadMore(show_item);
+
+            function loadMore(showing) {
+                $grid.find(".hidden").removeClass("hidden");
+
+                var hidden = isotop_call.filteredItems.slice(showing, isotop_call.filteredItems.length).map(function (item) {
+                    return item.element;
+                });
+
+                $(hidden).addClass('hidden');
+                $grid.isotope('layout');
+            }
+
+            $(".rs-portfolio-tab").on('click', function () {
+                $(this).data('clicked', true);
+
+                loadMore(show_item);
+            });
+
+        });
     } else {
-      $(".header").removeClass("fixed-header");
+        $('.grid').imagesLoaded(function () {
+            // init Isotope
+            var $grid = $('.grid').isotope({
+                itemSelector: '.grid-item',
+                percentPosition: true,
+                masonry: {
+                    // use outer width of grid-sizer for columnWidth
+                    columnWidth: '.grid-item',
+                }
+            });
+
+
+            // filter items on button click
+            $('.featured-menu').on('click', 'button', function () {
+                var filterValue = $(this).attr('data-filter');
+                $grid.isotope({ filter: filterValue });
+            });
+
+            //for menu active class
+            $('.featured-menu button').on('click', function (event) {
+                $(this).siblings('.active').removeClass('active');
+                $(this).addClass('active');
+                event.preventDefault();
+            });
+
+        });
+
+        var show_item_2 = $('.featured-load-item-count').attr('data-show');
+        $(".featured-load-item").hide();
+        $(".featured-load-item").slice(0, show_item_2).show();
+        $("body").on('click touchstart', '.load-more', function (e) {
+            e.preventDefault();
+            $(".featured-load-item:hidden").slice(0, show_item_2).slideDown();
+            if ($(".featured-load-item:hidden").length == 0) {
+                $(".load-more").css('display', 'none');
+            }
+
+        });
     }
-  });
-  // ========================= Header Sticky Js End===================
+
+    // Active accordion items
+    const accordionItems = document.querySelectorAll('.rs-accordion-item.has-border-active');
+    accordionItems.forEach(item => {
+        item.addEventListener('click', () => {
+            accordionItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    //    mouse move
+    document.addEventListener('mousemove', function (event) {
+        // Get the mouse position
+        let x = event.clientX;
+        let y = event.clientY;
+
+        // Calculate the percentage of the mouse position relative to the window size
+        let xPercent = (x / window.innerWidth) - 0.5;
+        let yPercent = (y / window.innerHeight) - 0.5;
+
+        // Select all the shapes
+        let shapes = document.querySelectorAll('.shape-move img');
+
+        // Loop through each shape and apply a transform based on mouse position
+        shapes.forEach(function (shape, index) {
+            // Modify the multiplier values to control the movement intensity
+            let multiplierX = 40 + index * 2;
+            let multiplierY = 40 + index * 2;
+
+            let translateX = xPercent * multiplierX;
+            let translateY = yPercent * multiplierY;
+
+            shape.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        });
+    });
+
+
+    // Smooth Scroling
+    if ($('.rs-smoother-yes').length) {
+        const lenis = new Lenis({
+            smoothWheel: true,
+            wheelMultiplier: 1.2,
+            duration: 1.5,
+            lerp: 0.1,
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Handle scroll animation for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((el) => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault()
+                const id = el.getAttribute('href')?.slice(1)
+                if (!id) return
+                const target = document.getElementById(id)
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' })
+                }
+            })
+        });
+    }
+
+    // image scale active
+    if ($('.rs-scale-item').length) {
+        // Get all menu items
+        const portfolio_items = document.querySelectorAll('.rs-scale-item');
+        // Add event listeners to each item
+        portfolio_items.forEach((item) => {
+            item.addEventListener('mouseenter', () => {
+                // Remove the 'active' class from all items
+                portfolio_items.forEach((portfolio_item) => {
+                    portfolio_item.classList.remove('active');
+                });
+                // Add the 'active' class to the hovered item
+                item.classList.add('active');
+            });
+        });
+        portfolio_items[1].classList.add("active");
+    };
+
+    //  text slide
+    var roll_slider = new Swiper(".text-slide-one", {
+        loop: true,
+        freemode: true,
+        slidesPerView: 4,
+        spaceBetween: 0,
+        // centeredSlides: false,
+        allowTouchMove: false,
+        speed: 10000,
+        autoplay: {
+            delay: 1,
+            disableOnInteraction: true,
+        },
+    });
+
+    // Contact Form Activation
+    var form = $('#contact-form');
+    var formMessages = $('#form-messages');
+    $(form).submit(function (e) {
+        e.preventDefault();
+        var formData = $(form).serialize();
+        $.ajax({
+            type: 'POST',
+            url: $(form).attr('action'),
+            data: formData
+        })
+            .done(function (response) {
+                $(formMessages).removeClass('error');
+                $(formMessages).addClass('success');
+                $(formMessages).text(response);
+                $('#name, #email, #message').val('');
+                if ($('#phone').length) $('#phone').val('');
+                if ($('#website').length) $('#website').val('');
+                if ($('#subject').length) $('#subject').val('');
+                if ($('#date').length) $('#date').val('');
+                if ($('#time').length) $('#time').val('');
+            })
+            .fail(function (data) {
+                $(formMessages).removeClass('success');
+                $(formMessages).addClass('error');
+                if (data.responseText !== '') {
+                    $(formMessages).text(data.responseText);
+                } else {
+                    $(formMessages).text('Oops! An error occurred and your message could not be sent.');
+                }
+            });
+    });
+
 })(jQuery);
+

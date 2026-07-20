@@ -3314,7 +3314,7 @@ textarea:focus {
 /*----------------------------------------*/
 .rs-breadcrumb-one {
   padding-top: 30px;
-  padding-bottom: 30	px;
+  padding-bottom: 30px;
 }
 @media only screen and (max-width: 1199px) {
   .rs-breadcrumb-one {
@@ -3324,8 +3324,8 @@ textarea:focus {
 }
 @media only screen and (max-width: 767px) {
   .rs-breadcrumb-one {
-    padding-top: 120px;
-    padding-bottom: 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 .rs-breadcrumb-one .rs-breadcrumb-bg.bg-black {
@@ -3364,7 +3364,7 @@ textarea:focus {
 }
 @media only screen and (max-width: 480px) {
   .rs-breadcrumb-one .rs-breadcrumb-title {
-    font-size: 35px;
+    font-size: 28px;
   }
 }
 .rs-breadcrumb-one .rs-breadcrumb-menu ul {
@@ -6171,7 +6171,7 @@ html.lenis body {
   }
 }
 .rs-header-one .main-menu {
-  border-inline-start: 1px solid rgba(31, 31, 31, 0.07);
+  
   padding-inline-start: 30px;
   margin-inline-start: 50px;
 }
@@ -11385,11 +11385,11 @@ html.lenis body {
   list-style: none;
 }
 .main-menu li a {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
   line-height: 1;
   color: var(--rs-text-primary);
-  padding: 40px 20px;
+  padding: 32px 15px;
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -31052,6 +31052,37 @@ a.ui-button:active {
 .ui-widget-shadow {
   -webkit-box-shadow: 0 0 5px #666;
   box-shadow: 0 0 5px #666;
+}
+
+.card{
+    overflow:hidden;
+    border-radius:12px;
+    transition:.35s;
+}
+
+.card img{
+    height:250px;
+    object-fit:cover;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,.12)!important;
+}
+
+.card:hover img{
+    transform:scale(1.05);
+}
+
+.card-body{
+    padding:18px;
+}
+
+.card-body h6{
+    font-size:17px;
+    font-weight:600;
+    color:#222;
 }
 
 /*# sourceMappingURL=main.css.map */

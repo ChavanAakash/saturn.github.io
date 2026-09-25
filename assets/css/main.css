@@ -79,7 +79,7 @@ h6, .body__overlay {
   --rs-fw-black: 900;
   /** @font size declaration */
   --rs-fs-body: 18px;
-  --rs-fs-p: 17px;
+  --rs-fs-p: 19px;
   --rs-fs-h1: 68px;
   --rs-fs-h2: 52px;
   --rs-fs-h3: 38px;
@@ -120,7 +120,7 @@ i[class^=icon-] {
   .container-sm,
   .container-xl,
   .container-xxl {
-    max-width: 1390px;
+    max-width: 1300px;
   }
 }
 .row {
@@ -609,7 +609,7 @@ p {
   font-size: var(--rs-fs-p);
   font-family: var(--rs-ff-p);
   font-weight: var(--rs-fw-normal);
-  color: var(--rs-text-primary);
+  color: #201f1f;
   margin-bottom: 30px;
   line-height: 30px;
 }
@@ -6111,7 +6111,7 @@ html.lenis body {
 .rs-header-one .rs-header-logo-wrapper {
   width: 295px;
   height: 98px;
-  background-color: var(--rs-bg-primary);
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

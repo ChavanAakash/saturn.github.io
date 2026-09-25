@@ -21,6 +21,482 @@
     <link rel="stylesheet" href="assets/css/vendor/spacing.css">
     <link rel="stylesheet" href="assets/css/vendor/remixicon.css">
     <link rel="stylesheet" href="assets/css/main.css">
+
+<style>
+/* ==========================================
+   AEATPL CASE STUDY - CLEAN REDESIGN
+   Header, breadcrumb, CTA and footer remain
+   on the existing template.
+========================================== */
+
+.ae-case-study-wrap {
+    padding: 78px 0 30px;
+    background: #fff;
+}
+
+.ae-case-study-intro {
+    max-width: 900px;
+    margin: 0 auto 48px;
+    text-align: center;
+}
+
+.ae-case-study-intro .ae-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ea5501;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.ae-case-study-intro .ae-label:before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: #ea5501;
+}
+
+.ae-case-study-intro h2 {
+    color: #172b43;
+    font-size: 42px;
+    line-height: 1.18;
+    margin: 0 auto 18px;
+    font-weight: 700;
+}
+
+.ae-case-study-intro .ae-title-line {
+    width: 48px;
+    height: 3px;
+    background: #ea5501;
+    margin: 0 auto 22px;
+}
+
+.ae-case-study-intro p {
+    max-width: 760px;
+    margin: 0 auto;
+    color: #68727b;
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+/* Project overview */
+.ae-case-overview {
+    margin-top: 30px;
+    background: #172b43;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    min-height: 190px;
+    overflow: hidden;
+}
+
+.ae-case-overview-image {
+    min-height:190px;
+}
+
+.ae-case-overview-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.ae-case-overview-info {
+    background: #f7f8f9;
+    padding: 34px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ae-case-info-item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #dde2e5;
+}
+
+.ae-case-info-item:first-child {
+    padding-top: 0;
+}
+
+.ae-case-info-item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.ae-case-info-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ea5501;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ea5501;
+    font-size: 18px;
+}
+
+.ae-case-info-item small {
+    display: block;
+    color: #7b858d;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 5px;
+}
+
+.ae-case-info-item strong {
+    color: #172b43;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Common case-study sections */
+.ae-case-block {
+    padding: 78px 0;
+}
+
+.ae-case-block.ae-soft-bg {
+    background: #f6f8f9;
+}
+
+.ae-case-two-col {
+    display: grid;
+    grid-template-columns: .82fr 1.18fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.ae-case-heading .ae-step {
+    display: block;
+    color: #ea5501;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    margin-bottom: 13px;
+}
+
+.ae-case-heading h3 {
+    color: #172b43;
+    font-size: 36px;
+    line-height: 1.2;
+    margin: 0;
+    font-weight: 700;
+}
+
+.ae-case-heading h3:before {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 42px;
+    background: #ea5501;
+    position: absolute;
+    margin-left: -18px;
+}
+
+.ae-case-copy p {
+    color: #66717a;
+    font-size: 20px;
+    line-height: 1.9;
+    margin: 0 0 18px;
+}
+
+.ae-case-quote {
+    background: #f7f8f9;
+    border-left: 4px solid #ea5501;
+    padding: 27px 30px;
+    margin-bottom: 25px;
+}
+
+.ae-case-quote p {
+    margin: 0;
+    color: #45515a;
+    font-size: 20px;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+/* Approach */
+.ae-approach-head {
+    max-width: 800px;
+    margin-bottom: 42px;
+}
+
+.ae-approach-head p {
+    color: #68727b;
+    line-height: 1.8;
+    margin: 18px 0 0;
+}
+
+.ae-process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.ae-process-card {
+    background: #fff;
+    border: 1px solid #e5e9ec;
+    padding: 28px 25px;
+    min-height: 190px;
+    transition: all .25s ease;
+}
+
+.ae-process-card:hover {
+    border-color: #ea5501;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(20, 43, 67, .07);
+}
+
+.ae-process-card .number {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff3ed;
+    color: #ea5501;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.ae-process-card h4 {
+    color: #172b43;
+    font-size: 18px;
+    margin: 0 0 10px;
+}
+
+.ae-process-card p {
+    color: #707a82;
+    font-size: 20px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.ae-process-bottom {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 25px;
+}
+
+.ae-process-bottom span {
+    color: #3d4951;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ae-process-bottom i {
+    color: #ea5501;
+    margin-right: 6px;
+}
+
+/* Result */
+.ae-result-top {
+    max-width: 850px;
+    margin-bottom: 38px;
+}
+
+.ae-result-top p {
+    color: #68727b;
+    line-height: 1.8;
+    margin: 16px 0 0;
+}
+
+.ae-result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.ae-result-card {
+    background: #fff;
+    border: 1px solid #e4e8eb;
+    padding: 27px 23px;
+    min-height: 195px;
+}
+
+.ae-result-card .result-icon {
+    color: #ea5501;
+    font-size: 22px;
+    margin-bottom: 18px;
+}
+
+.ae-result-card h4 {
+    color: #172b43;
+    font-size: 18px;
+    line-height: 1.35;
+    margin: 0 0 11px;
+}
+
+.ae-result-card p {
+    color: #707a82;
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.ae-partnership {
+    margin-top: 30px;
+    background: #172b43;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    min-height: 190px;
+    overflow: hidden;
+}
+
+.ae-partnership-image {
+    min-height: 190px;
+}
+
+.ae-partnership-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ae-partnership-copy {
+    padding: 35px 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ae-partnership-copy span {
+    color: #ea5501;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.ae-partnership-copy p {
+    color: rgba(255,255,255,.82);
+    font-size: 20px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Final statement */
+.ae-case-final-quote {
+    padding: 62px 0;
+    background: #ea5501;
+}
+
+.ae-case-final-quote .quote-inner {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ae-case-final-quote .quote-mark {
+    color: rgba(255,255,255,.45);
+    font-size: 60px;
+    line-height: .6;
+    font-family: Georgia, serif;
+}
+
+.ae-case-final-quote p {
+    color: #fff;
+    font-size: 22px;
+    line-height: 1.6;
+    font-weight: 600;
+    margin: 12px 0 0;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .ae-case-study-wrap {
+        padding-top: 60px;
+    }
+
+    .ae-case-study-intro h2 {
+        font-size: 34px;
+    }
+
+    .ae-case-overview,
+    .ae-case-two-col,
+    .ae-partnership {
+        grid-template-columns: 1fr;
+    }
+
+    .ae-case-overview-image,
+    .ae-case-overview-image img {
+        min-height: 300px;
+    }
+
+    .ae-process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ae-result-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ae-case-heading {
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 575px) {
+    .ae-case-study-wrap {
+        padding: 48px 0 20px;
+    }
+
+    .ae-case-study-intro h2 {
+        font-size: 28px;
+    }
+
+    .ae-case-study-intro p {
+        font-size: 14px;
+    }
+
+    .ae-case-overview-info {
+        padding: 25px 22px;
+    }
+
+    .ae-case-block {
+        padding: 58px 0;
+    }
+
+    .ae-case-two-col {
+        gap: 35px;
+    }
+
+    .ae-case-heading h3 {
+        font-size: 29px;
+    }
+
+    .ae-process-grid,
+    .ae-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ae-process-bottom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .ae-partnership-copy {
+        padding: 28px;
+    }
+
+    .ae-case-final-quote p {
+        font-size: 18px;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -53,7 +529,7 @@
                         <nav id="mobile-menu" class="main-menu">
                             <ul class="multipage-menu">
                                 
-                                <li class="menu-item">
+                                <li class="menu-item ">
                                     <a href="index.html">Home</a>
                                 </li>
 								
@@ -83,20 +559,8 @@
                     <div class="rs-header-right">
                         
                         <div class="rs-header-btn d-none d-sm-block ">
-                            <a class="rs-btn has-theme-orange has-icon has-bg has-large-radius" href="enquiry.html">Get
-                                A Quote
-                                <span class="icon-box">
-                                    <svg class="icon-first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                    <svg class="icon-second" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                </span>
+                            <a class="rs-btn has-theme-orange has-icon has-bg has-large-radius" href="enquiry.html">Request A Quote
+                              
                             </a>
                         </div>
                         <div class="rs-header-hamburger d-block d-sm-none">
@@ -131,7 +595,7 @@
                         <nav id="mobile-menu-two" class="main-menu">
                             <ul class="multipage-menu">
                                
-                                <li class="menu-item">
+                                <li class="menu-item ">
                                     <a href="index.html">Home</a>
                                    
                                 </li>
@@ -140,7 +604,7 @@
                                    
                                 </li>
 								
-								 <li class="menu-item ">
+								 <li class="menu-item">
                                     <a href="products.html">Products</a>
                                    
                                 </li>
@@ -170,21 +634,7 @@
                     <div class="rs-header-right">
                         
                         <div class="rs-header-btn d-none d-sm-block ">
-                            <a class="rs-btn has-theme-orange has-icon has-bg has-large-radius" href="enquiry.html">Get
-                                A Quote
-                                <span class="icon-box">
-                                    <svg class="icon-first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                    <svg class="icon-second" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                </span>
-                            </a>
+                            <a class="rs-btn has-theme-orange has-bg has-large-radius" href="enquiry.html">Request A Quote</a>
                         </div>
                         <div class="rs-header-hamburger d-block d-sm-none">
                             <div class="sidebar-toggle">
@@ -204,8 +654,8 @@
         </div>
     </header>
     <!-- Header area end -->
-	
-	 <!-- Offcanvas area start -->
+
+     <!-- Offcanvas area start -->
     <div class="fix">
         <div class="offcanvas-area" data-lenis-prevent>
             <div class="offcanvas-wrapper">
@@ -230,20 +680,8 @@
                         <div class="rs-offcanvas-menu mb-25">
                             <nav></nav>
                         </div>
-						<a class="rs-btn has-theme-orange has-icon has-bg has-large-radius mb-30" href="enquiry.html">Get
-                                A Quote
-                                <span class="icon-box">
-                                    <svg class="icon-first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                    <svg class="icon-second" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                        <path
-                                            d="M31.71,15.29l-10-10L20.29,6.71,28.59,15H0v2H28.59l-8.29,8.29,1.41,1.41,10-10A1,1,0,0,0,31.71,15.29Z">
-                                        </path>
-                                    </svg>
-                                </span>
+						<a class="rs-btn has-theme-orange has-icon has-bg has-large-radius mb-30" href="enquiry.html">Request A Quote
+                                
                             </a>
                     </div>
                     <div class="offcanvas-contact mb-30">
@@ -263,7 +701,7 @@
                                     </svg>
                                 </div>
                                 <div class="offcanvas-contact-text">
-                                    <a href="tel:+9198 81 150 700"> +91 98 81 150 700 </a>
+                                    <a href="tel:+91-9881150808"> +91-9881150808</a>
                                 </div>
                             </li>
                             <li class="d-flex align-items-center gap-15">
@@ -279,7 +717,7 @@
                                     </svg>
                                 </div>
                                 <div class="offcanvas-contact-text">
-                                    <a href="mailto:sanjay@aeatpl.co.in">sanjay@aeatpl.co.in</a>
+                                    <a href="mailto:info@aeatpl.co.in">info@aeatpl.co.in</a>
                                 </div>
                             </li>
                         </ul>
@@ -330,120 +768,302 @@
 
        
 
-        <!-- contact area start -->
-        <section class="rs-contact-area  mt-30 rs-contact-six">
+        
+        <!-- CASE STUDY CONTENT START -->
+        <section class="ae-case-study-wrap">
+
             <div class="container">
-                <div class="row">
-                    <div class="rs-section-title-wrapper text-center ">
-                        <span class="rs-section-subtitle has-theme-orange">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="15" viewBox="0 0 11 15"
-                                fill="none">
-                                <path d="M3.14286 10L0 15L8.78104e-07 0L3.14286 5V10Z" fill="#EA5501"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M6.28571 10L3.14286 15L3.14286 10L4.71428 7.5L3.14286 5L3.14286 0L6.28571 5L6.28571 10ZM6.28571 10L7.85714 7.5L6.28571 5V0L11 7.5L6.28571 15V10Z"
-                                    fill="#EA5501"></path>
-                            </svg>
-                            Engineering Success Stories
-                        </span>
-                        
+
+                <!-- Intro -->
+                <div class="ae-case-study-intro">
+                    <span class="ae-label">Engineering Success Stories</span>
+                    <h2>Supporting a Leading Austrian Multinational in Tractor Brake Component Manufacturing</h2>
+                    <div class="ae-title-line"></div>
+                    <p>
+                        Delivering high-precision brake components while maintaining
+                        consistent quality, reliable production and international
+                        manufacturing standards.
+                    </p>
+                </div>
+
+                <!-- Project Overview -->
+                <div class="ae-case-overview mb-30">
+
+                    <div class="ae-case-overview-image">
+                        <img src="assets/images/blog/case-studies1.jpg"
+                             alt="Tractor brake components" height="200px">
+                    </div>
+
+                    <div class="ae-case-overview-info">
+
+                        <div class="ae-case-info-item">
+                            <div class="ae-case-info-icon">
+                                <i class="ri-building-4-line"></i>
+                            </div>
+                            <div>
+                                <small>Industry</small>
+                                <strong>Automotive</strong>
+                            </div>
+                        </div>
+
+                        <div class="ae-case-info-item">
+                            <div class="ae-case-info-icon">
+                                <i class="ri-settings-3-line"></i>
+                            </div>
+                            <div>
+                                <small>Application</small>
+                                <strong>Tractor Brake Components</strong>
+                            </div>
+                        </div>
+
+                        <div class="ae-case-info-item">
+                            <div class="ae-case-info-icon">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <div>
+                                <small>Location</small>
+                                <strong>Pune, India</strong>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 				
-				
-				
-				
-                
+				 
+
             </div>
-        </section>
-        <!-- contact area start -->
-		
-		
-		
-		
-		     <!-- services style 01 -->
-        <section class="rs-elements-services-area rs-services-three  has-theme-orange">
-            <div class="container">
-                
-                <div class="row g-5 process-counts mb-60">
-                    <div class="col-xl-12 col-lg-8">
-                        <div class="rs-postbox-details-wrapper">
-                           
-                            <div class="rs-postbox-content">
-                                
-                                <h3 class="rs-postbox-details-title">
-                                    Supporting a Leading Austrian Multinational in Tractor Brake Component Manufacturing
-                                </h3>
-                            </div>
-							
-							 <div class="text-center">
-                                <img src="assets/images/blog/case-studies1.jpg"  width="300px" alt="image">
-                            </div>
-							
-                            <div class="rs-postbox-details-content">
-							<h3 class="rs-postbox-details-feature-title mb-20">The Challenge</h3>
-							
-								<div class="rs-postbox-quote quote-two">
-                                    <blockquote>
-                                        <p>“In 2007, a leading German automotive company established a new manufacturing facility in Pune to serve the Indian tractor brake OEM market. The company required a reliable manufacturing partner capable of producing high-precision brake plates while maintaining the same manufacturing standards as its German production facility.”</p>
-                                        
-                                    </blockquote>
-                                </div>
-							
-                                <p></p>
-                                <p>The objective was to replicate the existing manufacturing process, quality systems, and inspection methods within India without compromising quality or production efficiency.</p>
-                                 
-								<hr style="background:#c3c3c3;"><br>
-								
-								
-								<h3 class="rs-postbox-details-feature-title mb-20">Our Approach</h3>
-                                <p>After successful process approval and commercial acceptance, the AEATPL engineering team visited the customer's parent manufacturing facility in Germany to understand every aspect of the production system.</p>
-                                <p>Based on customer requirements, AEATPL successfully duplicated the complete manufacturing setup, including:</p>
-                                <div class="rs-postbox-details-feature">
-                                    <ul>
-                                        <li>Manufacturing layout</li>
-										<li>Production process</li>
-										<li>Machines and equipment</li>
-										<li>Inspection methods</li>
-										<li>Quality systems</li>
-										<li>Process controls</li>
-                                        
-                                    </ul>
-                                </div>
-								
-								<hr style="background:#c3c3c3;"><br>
-								
-								<div class="rs-postbox-quote quote-two">
-                                    <blockquote>
-                                        <p>“The production line was commissioned within the committed timeline while maintaining international quality standards.”</p>
-                                        
-                                    </blockquote>
-                                </div>
-                                <h3 class="rs-postbox-details-feature-title mb-20">The Result</h3>
-                                <p>The manufacturing facility achieved stable production in record time with:</p>
-								 <div class="rs-postbox-details-feature">
-                                    <ul>
-                                        <li>Consistent product quality</li>
-										<li>Required production volumes</li>
-										<li>On-time deliveries</li>
-										<li>Successful process validation</li>
-										<li>Long-term supply continuity</li>
-                                        
-                                    </ul>
-                                </div>
-								
-								<p>Later, when the German company became part of a leading Austrian multinational group, AEATPL continued supplying components without interruption and supported the customer's transition seamlessly.</p>
-								
-                               
-                                
-                            </div>
+
+			
+			
+			
+			
+            <!-- Challenge -->
+            <section class="ae-case-block ae-soft-bg">
+                <div class="container">
+
+                    <div class="ae-case-two-col">
+
+                        <div class="ae-case-heading">
+                            <span class="ae-step">01 / The Challenge</span>
+                            <h3>Building the right manufacturing capability in India.</h3>
                         </div>
+
+                        <div class="ae-case-copy">
+
+                            <div class="ae-case-quote">
+                                <p>
+                                    “In 2007, a leading German automotive company established
+                                    a new manufacturing facility in Pune to serve the Indian
+                                    tractor brake OEM market. The company required a reliable
+                                    manufacturing partner capable of producing high-precision
+                                    brake plates while maintaining the same manufacturing
+                                    standards as its German production facility.”
+                                </p>
+                            </div>
+
+                            <p>
+                                The objective was to replicate the existing manufacturing
+                                process, quality systems, and inspection methods within India
+                                without compromising quality or production efficiency.
+                            </p>
+
+                        </div>
+
                     </div>
-					
-					
-				</div>
-            </div>
+
+                </div>
+            </section>
+
+
+            <!-- Approach -->
+            <section class="ae-case-block">
+                <div class="container">
+
+                    <div class="ae-approach-head">
+                        <div class="ae-case-heading">
+                            <span class="ae-step">02 / Our Approach</span>
+                            <h3>From process understanding to production readiness.</h3>
+                        </div>
+
+                        <p>
+                            After successful process approval and commercial acceptance,
+                            the AEATPL engineering team visited the customer's parent
+                            manufacturing facility in Germany to understand every aspect
+                            of the production system.
+                        </p>
+
+                        <p>
+                            Based on customer requirements, AEATPL successfully duplicated
+                            the complete manufacturing setup.
+                        </p>
+                    </div>
+
+
+                    <div class="ae-process-grid">
+
+                        <div class="ae-process-card">
+                            <span class="number">01</span>
+                            <h4>Manufacturing Layout</h4>
+                            <p>
+                                Replication of the required manufacturing layout and
+                                production workflow.
+                            </p>
+                        </div>
+
+                        <div class="ae-process-card">
+                            <span class="number">02</span>
+                            <h4>Production Process</h4>
+                            <p>
+                                Understanding and implementation of the approved
+                                production process.
+                            </p>
+                        </div>
+
+                        <div class="ae-process-card">
+                            <span class="number">03</span>
+                            <h4>Machines & Equipment</h4>
+                            <p>
+                                Selection and implementation of suitable machines,
+                                tooling and equipment.
+                            </p>
+                        </div>
+
+                        <div class="ae-process-card">
+                            <span class="number">04</span>
+                            <h4>Inspection Methods</h4>
+                            <p>
+                                Implementation of inspection methods required for
+                                consistent component quality.
+                            </p>
+                        </div>
+
+                        <div class="ae-process-card">
+                            <span class="number">05</span>
+                            <h4>Quality Systems</h4>
+                            <p>
+                                Quality systems aligned with the customer's
+                                established standards.
+                            </p>
+                        </div>
+
+                        <div class="ae-process-card">
+                            <span class="number">06</span>
+                            <h4>Process Controls</h4>
+                            <p>
+                                Process controls supporting stable and repeatable
+                                production.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="ae-process-bottom">
+                        <span><i class="ri-checkbox-circle-fill"></i> Manufacturing Layout</span>
+                        <span><i class="ri-checkbox-circle-fill"></i> Production Process</span>
+                        <span><i class="ri-checkbox-circle-fill"></i> Machines & Equipment</span>
+                        <span><i class="ri-checkbox-circle-fill"></i> Inspection Methods</span>
+                        <span><i class="ri-checkbox-circle-fill"></i> Quality Systems</span>
+                        <span><i class="ri-checkbox-circle-fill"></i> Process Controls</span>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Result -->
+            <section class="ae-case-block ae-soft-bg">
+                <div class="container">
+
+                    <div class="ae-result-top">
+                        <div class="ae-case-heading">
+                            <span class="ae-step">03 / The Result</span>
+                            <h3>A production system built for consistency and continuity.</h3>
+                        </div>
+
+                        <p>
+                            The manufacturing facility achieved stable production in
+                            record time with the required quality, volumes and delivery
+                            performance.
+                        </p>
+                    </div>
+
+
+                    <div class="ae-result-grid">
+
+                        <div class="ae-result-card">
+                            <div class="result-icon">
+                                <i class="ri-award-line"></i>
+                            </div>
+                            <h4>Consistent Product Quality</h4>
+                            <p>
+                                Reliable component quality across production cycles.
+                            </p>
+                        </div>
+
+                        <div class="ae-result-card">
+                            <div class="result-icon">
+                                <i class="ri-bar-chart-grouped-line"></i>
+                            </div>
+                            <h4>Required Production Volumes</h4>
+                            <p>
+                                Production capability aligned with customer demand.
+                            </p>
+                        </div>
+
+                        <div class="ae-result-card">
+                            <div class="result-icon">
+                                <i class="ri-truck-line"></i>
+                            </div>
+                            <h4>On-Time Deliveries</h4>
+                            <p>
+                                Stable production supporting dependable deliveries.
+                            </p>
+                        </div>
+
+                        <div class="ae-result-card">
+                            <div class="result-icon">
+                                <i class="ri-verified-badge-line"></i>
+                            </div>
+                            <h4>Successful Process Validation</h4>
+                            <p>
+                                Manufacturing processes validated against customer
+                                requirements.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ae-partnership">
+
+                        <div class="ae-partnership-image">
+                            <img src="assets/images/blog/case-studies1.jpg"
+                                 alt="AEATPL manufacturing components">
+                        </div>
+
+                        <div class="ae-partnership-copy">
+                            <span>Long-Term Supply Continuity</span>
+                            <p>
+                                Later, when the German company became part of a leading
+                                Austrian multinational group, AEATPL continued supplying
+                                components without interruption and supported the
+                                customer's transition seamlessly.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
+           
+
         </section>
-        <!-- services style 01 -->
+        <!-- CASE STUDY CONTENT END -->
+
+
+->
 
        <!-- cta area start -->
         <section class="rs-cta-area rs-cta-two has-theme-orange">
